@@ -4,6 +4,14 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     concat: {
     },
+    gitpush:{
+      your_target: {
+        options: {
+          remote: "live",
+          branch: "master"
+        }
+      }
+    },
 
     mochaTest: {
       test: {
@@ -55,6 +63,7 @@ module.exports = function(grunt) {
     },
   });
 
+  grunt.loadNpmTasks('grunt-git');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
@@ -93,7 +102,7 @@ module.exports = function(grunt) {
     'mochaTest'
   ]);
 
-  grunt.registerTask('build', [
+  grunt.registerTask('build', ['nodemon', 'gitpush'
   ]);
 
   grunt.registerTask('upload', function(n) {
