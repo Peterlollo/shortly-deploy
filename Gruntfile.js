@@ -102,7 +102,7 @@ module.exports = function(grunt) {
     'mochaTest'
   ]);
 
-  grunt.registerTask('build', ['nodemon', 'gitpush'
+  grunt.registerTask('build', [ 'gitpush'
   ]);
 
   grunt.registerTask('upload', function(n) {
