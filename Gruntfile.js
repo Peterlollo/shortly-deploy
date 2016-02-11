@@ -3,7 +3,15 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
-    },
+        options: {
+          separator: ';',
+        },
+        pub: {
+          src: ['public/**/*.js'],
+          dest: 'public/public.concat.js'
+        }
+      },
+      
     gitpush:{
       your_target: {
         options: {
@@ -27,17 +35,26 @@ module.exports = function(grunt) {
         script: 'server.js'
       }
     },
-
     uglify: {
-    },
+       my_target: {
+         files: {
+           'public/public.concat.min.js': ['public/public.concat.js'] // TO DO add rest of the files to uglify..
+         }
+       }
+     },
 
     eslint: {
       target: [
-        // Add list of files to lint here
-      ]
+        'app/**/*.js'
+      ] // TO DO add more stuff
     },
 
     cssmin: {
+      target: {
+          files: {
+            'public/style.min.css': ['public/style.css']
+          }
+        }
     },
 
     watch: {
@@ -102,8 +119,8 @@ module.exports = function(grunt) {
     'mochaTest'
   ]);
 
-  grunt.registerTask('build', [ 'gitpush'
-  ]);
+  grunt.registerTask('build', [ 'concat', 'uglify', 'cssmin', 'eslint', 'gitpush' ]
+  );
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
